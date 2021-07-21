@@ -1,50 +1,52 @@
-const relogio = document.querySelector(".relogio");
-const iniciar = document.querySelector(".iniciar");
-const pausar = document.querySelector(".pausar");
-const zerar = document.querySelector(".zerar");
+function timer() {
+  const relogio = document.querySelector(".relogio");
 
-let segundos = 0;
-let timer;
+  let segundos = 0;
+  let timer;
 
-function getTimeFromSeconds(segundos) {
-    return new Date(segundos * 1000).toLocaleTimeString('pt-BR', {hour12: false, timeZone: 'GMT'});
-}
+  function getTimeFromSeconds(segundos) {
+    return new Date(segundos * 1000).toLocaleTimeString("pt-BR", {
+      hour12: false,
+      timeZone: "GMT",
+    });
+  }
 
-function iniciarRelogio() {
+  function iniciarRelogio() {
     timer = setInterval(() => {
-        segundos++;
-        relogio.innerHTML = getTimeFromSeconds(segundos);
+      segundos++;
+      relogio.innerHTML = getTimeFromSeconds(segundos);
     }, 1000);
-}
+  }
 
-function btnIniciar() {
+  function btnIniciar() {
     relogio.classList.remove("pausado");
-    clearInterval(timer); 
+    clearInterval(timer);
     iniciarRelogio();
-}
+  }
 
-function btnPausar() {
+  function btnPausar() {
     relogio.classList.add("pausado");
     clearInterval(timer);
-}
+  }
 
-function btnZerar() {
+  function btnZerar() {
     relogio.classList.remove("pausado");
     clearInterval(timer);
-    segundos = 0; 
+    segundos = 0;
     relogio.innerHTML = getTimeFromSeconds(segundos);
-}
+  }
 
-document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     const elemento = event.target;
 
     if (elemento.classList.contains("iniciar")) {
-        btnIniciar();
+      btnIniciar();
+    } else if (elemento.classList.contains("pausar")) {
+      btnPausar();
+    } else if (elemento.classList.contains("zerar")) {
+      btnZerar();
     }
-    else if (elemento.classList.contains("pausar")) {
-        btnPausar();
-    }
-    else if (elemento.classList.contains("zerar")) {
-        btnZerar();
-    }    
-});
+  });
+}
+
+timer();
